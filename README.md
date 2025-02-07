@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+<b>Our Blog sketch - </b>  https://www.figma.com/design/jbB8F4HngAWvBhaDlXOeTP/Untitled?node-id=0-1&t=2Rryqco3TL8eMvC2-1 <br>
+<b>Color Palette - </v> https://colorhunt.co/palette/4b594566785f91ac8fb2c9ad
+
 ## Getting Started
 
 First, run the development server:

@@ -6,8 +6,6 @@ const page = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-black text-center">Login</h1>
-        
-      
         <form >
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -22,7 +20,6 @@ const page = () => {
               required
             />
           </div>
-
           <div className="mb-6">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
@@ -36,7 +33,6 @@ const page = () => {
               required
             />
           </div>
-
           <button
             type="submit"
             className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"

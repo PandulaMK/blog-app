@@ -29,8 +29,7 @@ const page = () => {
               id="email"
               name="email"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black text-black"
-              placeholder="Enter your email"
-             
+              placeholder="Enter your email"             
             />
           </div>
           <div className="mb-6">
@@ -42,8 +41,7 @@ const page = () => {
               id="password"
               name="password"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black text-black"
-              placeholder="Enter your password"
-              
+              placeholder="Enter your password"            
             />
           </div>
           <div className="mb-6">
@@ -55,8 +53,7 @@ const page = () => {
               id="confirmPassword"
               name="confirmPassword"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black text-black"
-              placeholder="Confirm your password"
-              
+              placeholder="Confirm your password"         
             />
           </div>
           <div className="mb-6">
@@ -67,8 +64,7 @@ const page = () => {
               type="file"
               id="userImage"
               name="userImage"
-              accept="image/*"
-              
+              accept="image/*"       
               className="mt-1 block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-black file:text-white hover:file:bg-gray-900"
             />
             

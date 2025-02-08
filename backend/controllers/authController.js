@@ -72,4 +72,50 @@ const registerUser = async (req, res) => {
     });
   };
 
-  module.exports = { registerUser };
+
+// Login User
+const loginUser = async (req, res) => {
+
+ 
+    const { email, password } = req.body;
+  
+    if (!email || !password) {
+     
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+    
+    try {
+      const user = await User.findOne({ email });
+      console.log("User found:", user);
+      
+      if (!user) {
+        
+        return res.status(400).json({ message: "User not found" });
+      }
+      
+      
+      const isMatch = await bcrypt.compare(password, user.password);
+      
+      if (!isMatch) {
+        console.log("Password does not match for:", email);
+        return res.status(400).json({ message: "Invalid credentials" });
+      }
+  
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+      });
+      console.log("Login successful for:", email);
+  
+      res.status(200).json({
+        token,
+       
+      });
+  
+      
+    } catch (error) {
+     
+      res.status(500).json({ message: "Error logging in", error });
+    }
+  };
+  
+  module.exports = { registerUser, loginUser };

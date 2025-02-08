@@ -1,2 +1,34 @@
+# Node modules
+node_modules/
+
+# Environment variables
 .env
-/node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+bower_components/
+jspm_packages/
+
+# Build files
+dist/
+build/
+
+# Database files
+*.sqlite
+*.sqlite3
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Misc
+coverage/
+.cache/
+.vscode/
+.idea/

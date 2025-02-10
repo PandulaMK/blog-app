@@ -5,6 +5,10 @@ const cors = require("cors");
 
 const authRoutes = require('./routes/authRoutes');
 
+const profileRoutes = require("./routes/profileRoutes");
+app.use("/api", profileRoutes); // Mount profile routes
+
+
 dotenv.config();
 
 

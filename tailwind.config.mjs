@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        serif: ['gt-super', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

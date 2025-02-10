@@ -1,6 +1,9 @@
 # Node modules
 node_modules/
 
+#images
+uploads/
+
 # Environment variables
 .env
 

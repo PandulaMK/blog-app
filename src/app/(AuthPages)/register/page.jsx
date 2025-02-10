@@ -1,12 +1,64 @@
+"use client";
+
 import Link from 'next/link';
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
 
 
 const page = () => {
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    userImage: null,
+  });
+  const router = useRouter();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, userImage: e.target.files[0] });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("password", formData.password);
+    data.append("confirmPassword", formData.confirmPassword);
+    data.append("userImage", formData.userImage);
+
+   // console.log("Submitting form data:", [...data.entries()]);
+    
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/register", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+     console.log("Response:", res.data);
+      
+      alert(res.data.message);
+      router.push("/login");
+    } catch (error) {
+     // console.error("Error:", error.response?.data);
+      alert(error.response?.data?.message || "Registration failed");
+    }
+  };
+
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-black text-center">Sign Up</h1>
-        <form  >
+        <form onSubmit={handleSubmit} >
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Name
@@ -17,7 +69,7 @@ const page = () => {
               name="name"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black text-black"
               placeholder="Enter your name"
-             
+              onChange={handleChange}
             />
           </div>
           <div className="mb-4">
@@ -29,7 +81,8 @@ const page = () => {
               id="email"
               name="email"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black text-black"
-              placeholder="Enter your email"             
+              placeholder="Enter your email"  
+              onChange={handleChange}           
             />
           </div>
           <div className="mb-6">
@@ -41,7 +94,8 @@ const page = () => {
               id="password"
               name="password"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black text-black"
-              placeholder="Enter your password"            
+              placeholder="Enter your password" 
+              onChange={handleChange}           
             />
           </div>
           <div className="mb-6">
@@ -53,7 +107,8 @@ const page = () => {
               id="confirmPassword"
               name="confirmPassword"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black text-black"
-              placeholder="Confirm your password"         
+              placeholder="Confirm your password" 
+              onChange={handleChange}        
             />
           </div>
           <div className="mb-6">
@@ -64,7 +119,8 @@ const page = () => {
               type="file"
               id="userImage"
               name="userImage"
-              accept="image/*"       
+              accept="image/*"  
+              onChange={handleFileChange}     
               className="mt-1 block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-black file:text-white hover:file:bg-gray-900"
             />
             

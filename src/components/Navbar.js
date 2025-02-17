@@ -33,7 +33,7 @@ export default function Navbar() {
 
         {/* Right Side */}
         <div className="flex space-x-4 items-center">
-          <Link href="/signin" className="text-gray-700 hover:text-black">
+          <Link href="/login" className="text-gray-700 hover:text-black">
             Sign in
           </Link>
           <Link

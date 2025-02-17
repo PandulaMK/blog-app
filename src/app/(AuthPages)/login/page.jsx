@@ -35,7 +35,7 @@ const page = () => {
       localStorage.setItem("token", data.token);
 
       // Redirect user to dashboard or home page
-      router.push("/UserProfile"); 
+      router.push("/dashboard"); 
     } catch (err) {
       setError("login error",err.message);
     }

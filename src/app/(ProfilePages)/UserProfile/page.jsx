@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./userprofile.module.css"; // Import styles
 
+
 const Page = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

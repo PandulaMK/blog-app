@@ -1,0 +1,101 @@
+body {
+  background-color: #ffffff;
+  font-family: 'Georgia', serif;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.logo {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  width: 100px;
+  height: auto;
+}
+
+.profile-header {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.profile-subtext {
+  font-size: 18px;
+  font-family: 'Arial', sans-serif;
+  color: #444;
+}
+
+.profile-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 50px;
+  margin-top: 20px;
+}
+
+.profile-button:hover {
+  background-color: #333;
+}
+
+.profile-image {
+  width: 150px; /* Set a fixed width */
+  height: 150px; /* Set a fixed height */
+  object-fit: cover; /* Crop the image to fit within the box */
+  border-radius: 50%; /* Make it circular if it's a profile picture */
+  border: 2px solid black; /* Optional: Add a border */
+}
+
+.profileBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 30px; /* Increased padding for a larger box */
+  border-radius: 15px; /* More rounded corners */
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15); /* Slightly larger shadow */
+  margin-top: 30px; /* Adjust for spacing */
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profileDetails {
+  margin-left: 30px; /* Add more spacing between image and text */
+  text-align: left;
+}
+
+.profileImage {
+  width: 150px; /* Larger image */
+  height: 150px; /* Maintain circular size */
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #000; /* Slightly thicker border */
+}
+
+.userName {
+  font-size: 24px; /* Larger font size for name */
+  font-weight: bold;
+  margin: 10px 0; /* Increased spacing */
+}
+
+.userEmail {
+  font-size: 18px; /* Larger font size for email */
+  color: #444;
+}
+
+.blogCount {
+  font-size: 16px; /* Adjusted size for blog count */
+  color: #666;
+}

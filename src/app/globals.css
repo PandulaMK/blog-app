@@ -2,20 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Font Import */
+@font-face {
+  font-family: 'gt-super';
+  src: url('/fonts/gt-super.woff2') format('woff2'); /* Adjust path if needed */
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Global Styles */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fdfaf4;
+  --foreground: #1a1a1a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Apply Global Styles */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-background text-foreground font-serif;
+}
+
+/* Button Styling */
+.btn {
+  @apply bg-black text-white px-7 py-3 rounded-full text-lg shadow-lg transition-transform transform hover:scale-105;
 }

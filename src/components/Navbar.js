@@ -1,47 +1,62 @@
-import Link from 'next/link';
-import Image from 'next/image';
+"use client";
 
 export default function Navbar() {
   return (
-    <nav className="bg-[#fdfaf4] border-b border-gray-300">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Left Side - Logo */}
-        <Link href="/">
-          <div className="flex items-center space-x-3">
-            <Image
-              src="/images/logo.png" // Make sure the image is in public/images/
-              alt="Medium Logo"
-              width={120} // Increased width
-              height={50} // Increased height
-              className="object-contain"
-            />
-          </div>
-        </Link>
+    <nav className="bg-white shadow-sm">
+      <div className="container mx-auto flex items-center justify-between px-6 py-3">
+        {/* Logo */}
+        <img
+          src="/images/logo.png"
+          alt="Medium Logo"
+          className="w-32 h-auto" // Adjust the size as needed
+        />
 
-        {/* Center Links */}
-        <div className="hidden md:flex space-x-6">
-          <Link href="/our-story" className="text-gray-700 hover:text-black">
-            Our story
-          </Link>
-          <Link href="/membership" className="text-gray-700 hover:text-black">
-            Membership
-          </Link>
-          <Link href="/write" className="text-gray-700 hover:text-black">
-            Write
-          </Link>
+        {/* Search Bar - Hidden on Mobile */}
+        <div className="relative hidden md:flex">
+          <input
+            type="text"
+            placeholder="Search"
+            className="border border-gray-300 rounded-full px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          />
+          <span className="absolute right-3 top-2.5 text-gray-500">🔍</span>
         </div>
 
-        {/* Right Side */}
-        <div className="flex space-x-4 items-center">
-          <Link href="/login" className="text-gray-700 hover:text-black">
-            Sign in
-          </Link>
-          <Link
-            href="/get-started"
-            className="bg-black text-white px-5 py-2 rounded-full font-medium"
-          >
-            Get started
-          </Link>
+        {/* Right Side Icons */}
+        <div className="flex items-center space-x-4">
+          {/* Write Button */}
+          <a href="#" className="text-gray-600 hover:text-black transition">
+            ✍ Write
+          </a>
+
+          {/* Notification Icon */}
+          <div className="relative">
+            <span className="text-gray-600 hover:text-black transition cursor-pointer text-xl">
+              🔔
+            </span>
+            <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full px-1">
+              1
+            </span>
+          </div>
+
+          {/* Profile Dropdown */}
+          <div className="relative group">
+            <img
+              src="/profile.jpg"
+              alt="Profile"
+              className="w-8 h-8 rounded-full border border-gray-300 cursor-pointer"
+            />
+            <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                Profile
+              </a>
+              <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                Settings
+              </a>
+              <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                Logout
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

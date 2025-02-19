@@ -2,9 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./userprofile.module.css"; // Import styles
-
+import useAuth from "@/app/hooks/useAuth";
 
 const Page = () => {
+
+  useAuth()
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");

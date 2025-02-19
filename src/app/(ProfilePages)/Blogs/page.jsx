@@ -1,8 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./blogs.module.css"; // Import styles
+import useAuth from "@/app/hooks/useAuth";
 
 const UserContent = () => {
+
+  useAuth()
+
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);

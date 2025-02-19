@@ -5,6 +5,8 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const blogRoutes = require("./routes/blogRoutes");
+
 
 dotenv.config();
 
@@ -15,6 +17,7 @@ app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
 
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
@@ -22,6 +25,7 @@ mongoose
 
 app.use("/api/auth", authRoutes);
 app.use("/api", profileRoutes);
+app.use("/api/blogs", blogRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

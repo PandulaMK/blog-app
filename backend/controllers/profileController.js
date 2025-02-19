@@ -2,7 +2,7 @@ const User = require("../models/User"); // ✅ Make sure User is imported
 
 const getProfile = async (req, res) => {
   try {
-    console.log("Decoded user ID:", req.user.id); // Debugging log
+    console.log("Decoded user ID:", req.user.id);
 
     if (!req.user || !req.user.id) {
       return res.status(400).json({ message: "Invalid user ID in token" });

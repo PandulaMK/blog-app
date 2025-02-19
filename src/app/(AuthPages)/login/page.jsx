@@ -31,10 +31,10 @@ const page = () => {
         throw new Error(data.message || "Login failed");
       }
 
-      // Store token in localStorage
+   
       localStorage.setItem("token", data.token);
 
-      // Redirect user to dashboard or home page
+      
       router.push("/"); 
     } catch (err) {
       setError("login error",err.message);

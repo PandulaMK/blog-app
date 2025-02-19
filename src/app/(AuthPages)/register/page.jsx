@@ -38,7 +38,7 @@ const Page = () => {
     try {
       const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
-        body: data, // No need to set headers for FormData
+        body: data, 
       });
 
       const result = await response.json();

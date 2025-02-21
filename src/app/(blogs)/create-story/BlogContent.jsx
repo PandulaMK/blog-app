@@ -17,7 +17,15 @@ export default function BlogContent() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+  
+    // Retrieve the JWT token from localStorage (or wherever you store it)
+    const token = localStorage.getItem("token"); // Adjust this based on where you store the token
+  
+    if (!token) {
+      alert("You are not authenticated. Please log in.");
+      return;
+    }
+  
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
@@ -26,6 +34,9 @@ export default function BlogContent() {
     const response = await fetch("http://localhost:5000/api/blogs", {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+      },
     });
   
     if (response.ok) {

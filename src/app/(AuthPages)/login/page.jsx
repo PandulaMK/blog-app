@@ -35,7 +35,7 @@ const page = () => {
       localStorage.setItem("token", data.token);
 
       
-      router.push("/"); 
+      router.push("/view_blog"); 
     } catch (err) {
       setError("login error",err.message);
     }

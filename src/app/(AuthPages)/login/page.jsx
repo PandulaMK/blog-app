@@ -34,10 +34,11 @@ const page = () => {
    
       localStorage.setItem("token", data.token);
       localStorage.setItem("userImage", data.userImage);
+      localStorage.setItem("email", data.email);
       
       router.push("/view_blog"); 
     } catch (err) {
-      setError("login error",err.message);
+      setError(`Login error: ${err.message}`);
     }
   };
 

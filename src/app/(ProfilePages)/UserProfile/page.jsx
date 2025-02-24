@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./userprofile.module.css"; // Import styles
 import useAuth from "@/app/hooks/useAuth";
+import Navbar from "@/components/UserProfNav"; // Import the Navbar
 
 const Page = () => {
   useAuth(); // Ensure user is authenticated
@@ -70,9 +71,8 @@ const Page = () => {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <img src="/logo.png" alt="Logo" className={styles.logo} />
-      </header>
+      {/* Include the Navbar */}
+      <Navbar />
 
       <div className={styles.profileCard}>
         {loading ? (

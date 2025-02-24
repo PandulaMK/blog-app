@@ -56,6 +56,12 @@ export default function Navbar() {
 
         {/* Right Side */}
         <div className="flex space-x-8 items-center">
+          {/* Notification Icon */}
+          {/* <div className="flex items-center space-x-2">
+            <Link href="#">
+              <FaBell className="text-gray-700 hover:text-black cursor-pointer" />
+            </Link>
+          </div> */}
 
           {/* Avatar & Logout */}
           {isAuthenticated ? (

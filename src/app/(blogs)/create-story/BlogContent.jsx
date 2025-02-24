@@ -20,6 +20,7 @@ export default function BlogContent() {
   
     
     const token = localStorage.getItem("token"); 
+    const email = localStorage.getItem("email"); 
   
     if (!token) {
       alert("You are not authenticated. Please log in.");
@@ -29,6 +30,7 @@ export default function BlogContent() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
+    formData.append("email", email);
     images.forEach((image) => formData.append("images", image));
   
     const response = await fetch("http://localhost:5000/api/blogs", {

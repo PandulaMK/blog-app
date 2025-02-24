@@ -108,7 +108,7 @@ const loginUser = async (req, res) => {
   
       res.status(200).json({
         token,
-       
+        userImage: user.userImage,
       });
   
       

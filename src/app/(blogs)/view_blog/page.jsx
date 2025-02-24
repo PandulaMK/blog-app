@@ -2,10 +2,56 @@
 import Viewpage_Navbar from '@/components/Viewpage_Navbar';
 import Card from '../../../components/Card';
 import useAuth from "@/app/hooks/useAuth";
+import { useEffect, useState } from 'react';
 
 export default function View_Blog() {
     useAuth()
 
+    const [blogs, setBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+  
+    useEffect(() => {
+      const fetchBlogs = async () => {
+        try {
+          // Retrieve the token from localStorage
+          const token = localStorage.getItem("token");
+          if (!token) {
+            throw new Error("No token found. Please log in.");
+          }
+  
+          const response = await fetch("http://localhost:5000/api/blogs/getblogs", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, // Include the token in the headers
+            },
+          });
+  
+          if (!response.ok) {
+            throw new Error("Failed to fetch blogs");
+          }
+  
+          const data = await response.json();
+          setBlogs(data);
+        } catch (error) {
+          console.error("Error fetching blogs:", error);
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchBlogs();
+    }, []);
+  
+    if (loading) {
+      return <p>Loading...</p>;
+    }
+  
+    if (error) {
+      return <p>Error: {error}</p>;
+    }
   return (
     <div>
         <Viewpage_Navbar/>
@@ -28,26 +74,18 @@ export default function View_Blog() {
 
         {/* Featured Posts Section */}
         <div className="space-y-8">
-          <Card
-            title="$50/Hour Remote Jobs You Can Start Without Interviews"
-            description="Are you dreaming of a flexible work-from-home job that pays well and allows you to manage your time?"
-            date="Jan 14"
-            stats={{ views: 192, comments: 3 }}
-          />
-          <Card
-            title="Serendipity In Stripes"
-            description="The unexpected joys of book-hunting and discovering hidden gems in the most unlikely places."
-            date="1 day ago"
-            stats={{ views: 482, comments: 10 }}
-          />
-          <Card
-            title="Interviewer: Senior Developer? Let’s See How You Handle This Code Challenge"
-            description="Why experience alone isn't enough: The art of continuous improvement."
-            date="Sep 4, 2024"
-            stats={{ views: 631, comments: 25 }}
-          />
+            {blogs.map((blog) => (
+              <Card
+                key={blog._id}
+                title={blog.title}
+                description={blog.content}
+                date={new Date(blog.createdAt).toLocaleDateString()} 
+                stats={{ views: blog.views || 0, comments: blog.comments || 0 }}
+              
+              />
+            ))}
+          </div>
         </div>
-      </div>
 
       {/* Right Sidebar (Staff Picks + Writing Tips) */}
       <aside className="hidden lg:block w-1/4 p-6 bg-white shadow-md">

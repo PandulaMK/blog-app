@@ -11,15 +11,15 @@ export default function BlogContent() {
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
-    setImages([...images, ...files]); 
+    const fileUrls = files.map((file) => URL.createObjectURL(file)); // Create URLs 
+    setImages([...images, ...fileUrls]); // Store URLs 
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Retrieve the JWT token from localStorage (or wherever you store it)
-    const token = localStorage.getItem("token"); // Adjust this based on where you store the token
+    
+    const token = localStorage.getItem("token"); 
   
     if (!token) {
       alert("You are not authenticated. Please log in.");
@@ -35,12 +35,15 @@ export default function BlogContent() {
       method: "POST",
       body: formData,
       headers: {
-        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        Authorization: `Bearer ${token}`, 
       },
     });
   
     if (response.ok) {
       alert("Blog created successfully!");
+      setTitle(""); 
+      setContent(""); 
+      setImages([]); 
     } else {
       alert("Failed to create blog.");
     }

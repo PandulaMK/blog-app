@@ -33,7 +33,7 @@ const page = () => {
 
    
       localStorage.setItem("token", data.token);
-
+      localStorage.setItem("userImage", data.userImage);
       
       router.push("/view_blog"); 
     } catch (err) {

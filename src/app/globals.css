@@ -26,3 +26,10 @@ body {
   @apply bg-black text-white px-7 py-3 rounded-full text-lg shadow-lg transition-transform transform hover:scale-105;
 }
 
+body {
+  background-color: #ffffff;
+  font-family: 'Georgia', serif;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}

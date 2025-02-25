@@ -1,18 +1,14 @@
-"use client"
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const useAuth = () => {
+export default function useAuth(requireAuth = true) {
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-
-    if (!token) {
-      router.push("/login");
+    if (requireAuth && !token) {
+      router.push("/login"); // Redirect only if authentication is required
     }
-  }, [router]);
-};
-
-export default useAuth;
+  }, [requireAuth, router]);
+}

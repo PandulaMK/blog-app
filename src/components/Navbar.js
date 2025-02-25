@@ -68,7 +68,7 @@ export default function Navbar() {
 
           {/* Get Started button remains the same */}
           <Link
-            href="/view_blog"
+            href="/register"
             className="bg-black text-white px-5 py-2 rounded-full font-medium"
           >
             Get started

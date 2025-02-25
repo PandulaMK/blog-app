@@ -83,7 +83,7 @@ const Page = () => {
   };
 
   const handleEdit = (blogId) => {
-    router.push(`/edit-blog?id=${blogId}`); // Pass blogId in query
+    router.push(`/create-story?id=${blogId}`); 
   };
 
   return (

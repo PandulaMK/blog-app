@@ -75,3 +75,53 @@ exports.deleteBlog = async (req, res) => {
 };
 
 
+exports.updateBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    
+    const { title, content } = req.body;
+    const imagePaths = req.files ? req.files.map((file) => file.path) : [];
+
+    const token = req.header("Authorization")?.replace("Bearer ", "");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const blog = await Blog.findById(id);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    blog.title = title;
+    blog.content = content;
+    blog.images = imagePaths.length > 0 ? imagePaths : blog.images;
+    await blog.save();
+
+    res.status(200).json({ message: "Blog updated successfully!", blog });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update blog", error });
+  }
+};
+
+//Fetch a single blog by ID
+exports.getBlogById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find the blog by ID
+    const blog = await Blog.findById(id);
+
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    // Send the blog data as a response
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch blog", error });
+  }
+};

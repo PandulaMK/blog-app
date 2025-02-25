@@ -1,60 +1,98 @@
-"use client"
+"use client";
 import useAuth from '@/app/hooks/useAuth';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 export default function BlogContent() {
-    useAuth()
+  useAuth();
+  const router = useRouter();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [images, setImages] = useState([]);
+  const [blogId, setBlogId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const id = queryParams.get('id');
+    console.log(id);
+    
+    if (id) {
+      setIsEditing(true);
+      setBlogId(id);
+      fetchBlogData(id);
+    }
+  }, []);
+
+  const fetchBlogData = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`http://localhost:5000/api/blogs/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch blog data");
+      }
+
+      const blogData = await response.json();
+      setTitle(blogData.title);
+      setContent(blogData.content);
+      setImages(blogData.images);
+    } catch (err) {
+      alert("Failed to load blog data.");
+    }
+  };
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
-    const fileUrls = files.map((file) => URL.createObjectURL(file)); // Create URLs 
-    setImages([...images, ...fileUrls]); // Store URLs 
+    const fileUrls = files.map((file) => URL.createObjectURL(file));
+    setImages([...images, ...fileUrls]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    
-    const token = localStorage.getItem("token"); 
-  
+
+    const token = localStorage.getItem("token");
+
     if (!token) {
       alert("You are not authenticated. Please log in.");
       return;
     }
-  
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
     images.forEach((image) => formData.append("images", image));
-  
-    const response = await fetch("http://localhost:5000/api/blogs", {
-      method: "POST",
+
+    const url = isEditing ? `http://localhost:5000/api/blogs/${blogId}` : "http://localhost:5000/api/blogs";
+    const method = isEditing ? "PUT" : "POST";
+
+    const response = await fetch(url, {
+      method,
       body: formData,
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
-  
+
     if (response.ok) {
-      alert("Blog created successfully!");
-      setTitle(""); 
-      setContent(""); 
-      setImages([]); 
+      alert(isEditing ? "Blog updated successfully!" : "Blog created successfully!");
+      router.push("/UserProfile");
     } else {
-      alert("Failed to create blog.");
+      alert(isEditing ? "Failed to update blog." : "Failed to create blog.");
     }
   };
-  
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Create a New Blog</h1>
+      <h1 className="text-3xl font-bold mb-6">{isEditing ? "Edit Blog" : "Create a New Blog"}</h1>
       <form onSubmit={handleSubmit}>
-        {/* Title Field */}
         <input
           type="text"
           placeholder="Enter title"
@@ -64,7 +102,6 @@ export default function BlogContent() {
           required
         />
 
-        {/* Content Field */}
         <textarea
           placeholder="Write your blog here..."
           value={content}
@@ -74,7 +111,6 @@ export default function BlogContent() {
           required
         />
 
-        {/* Image Upload Button */}
         <div className="flex items-center mb-6">
           <label className="flex items-center space-x-2 cursor-pointer">
             <FaPlus className="text-gray-600" />
@@ -88,7 +124,6 @@ export default function BlogContent() {
           </label>
         </div>
 
-        {/* Display Uploaded Images */}
         <div className="flex space-x-4 mb-6">
           {images.map((img, index) => (
             <img
@@ -100,12 +135,11 @@ export default function BlogContent() {
           ))}
         </div>
 
-      
         <button
           type="submit"
           className="bg-black text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-800"
         >
-          Publish
+          {isEditing ? "Update Blog" : "Publish"}
         </button>
       </form>
     </div>

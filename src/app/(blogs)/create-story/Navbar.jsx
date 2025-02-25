@@ -67,7 +67,7 @@ export default function Navbar() {
           {isAuthenticated ? (
             <div className="flex items-center space-x-4">
               {/* Avatar */}
-              <Link href="/profile">
+              <Link href="/Userprofile">
                 <div className="relative">
                   {userImage && (
                     <img

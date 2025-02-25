@@ -1,7 +1,8 @@
 const Blog = require("../models/Blog");
-
+const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
+const User = require("../models/User")
 
 // Configure multer storage
 const storage = multer.diskStorage({
@@ -21,7 +22,21 @@ exports.createBlog = async (req, res) => {
     const { title, content } = req.body;
     const imagePaths = req.files ? req.files.map((file) => file.path) : [];
 
-    const newBlog = new Blog({ title, content, images: imagePaths });
+    // Extract user email from the token
+    const token = req.header("Authorization")?.replace("Bearer ", "");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const newBlog = new Blog({ 
+      title, 
+      content, 
+      images: imagePaths,
+      userEmail : user.email 
+    });
     await newBlog.save();
 
     res.status(201).json({ message: "Blog created successfully!", blog: newBlog });

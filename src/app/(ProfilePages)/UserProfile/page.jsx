@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./userprofile.module.css"; 
 import useAuth from '@/app/hooks/useAuth';
-import { FaArrowLeft } from "react-icons/fa";
+import Navbar from "@/components/UserProfNav";
 
 const Page = () => {
   useAuth();
@@ -60,12 +60,35 @@ const Page = () => {
     fetchUserProfileAndBlogs();
   }, []);
 
+  const handleDelete = async (blogId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`http://localhost:5000/api/blogs/${blogId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete the blog.");
+      }
+
+      setBlogs(blogs.filter(blog => blog._id !== blogId)); // Remove deleted blog from the list
+    } catch (err) {
+      setError("Error deleting blog");
+    }
+  };
+
+  const handleEdit = (blogId) => {
+    router.push(`/edit-blog?id=${blogId}`); // Pass blogId in query
+  };
+  
+
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <img src="/logo.png" alt="Logo" className={styles.logo} />
-        
-      </header>
+      <Navbar />
 
       <div className={styles.profileCard}>
         {loading ? (
@@ -92,17 +115,27 @@ const Page = () => {
 
       <div className={styles.blogsSection}>
         <h2 className={styles.blogsHeader}>Your Blogs</h2>
-        {blogs.map((blog) => (
-          <div key={blog._id} className={styles.blogCard}>
-            <h3 className={styles.blogTitle}>{blog.title}</h3>
-            <p className={styles.blogContent}>{blog.content}</p>
-            <div className={styles.blogImages}>
-              {blog.images.map((image, index) => (
-                <img key={index} src={`http://localhost:5000/${image}`} alt={`Blog Image ${index}`} className={styles.blogImage} />
-              ))}
+        {blogs.length > 0 ? (
+          blogs.map((blog) => (
+            <div key={blog._id} className={styles.blogCard}>
+              <h3 className={styles.blogTitle}>{blog.title}</h3>
+              <p className={styles.blogContent}>{blog.content}</p>
+              <div className={styles.blogImages}>
+                {blog.images.map((image, index) => (
+                  <img key={index} src={`http://localhost:5000/${image}`} alt={`Blog Image ${index}`} className={styles.blogImage} />
+                ))}
+              </div>
+              
+              {/* Edit & Delete Buttons */}
+              <div className={styles.blogActions}>
+                <button className={styles.editBtn} onClick={() => handleEdit(blog._id)}>Edit</button>
+                <button className={styles.deleteBtn} onClick={() => handleDelete(blog._id)}>Delete</button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className={styles.noBlogsText}>No blogs found.</p>
+        )}
       </div>
     </div>
   );

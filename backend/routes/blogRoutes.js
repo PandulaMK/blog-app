@@ -6,7 +6,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router.post("/", upload.array("images", 5), authMiddleware, createBlog);
-router.get("/getblogs", authMiddleware, getBlogs);
+router.get("/getblogs", getBlogs);
 router.delete("/:id", authMiddleware, deleteBlog); // ✅ Now deleteBlog is recognized
 
 

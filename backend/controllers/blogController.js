@@ -50,7 +50,7 @@ exports.createBlog = async (req, res) => {
 exports.getBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 }); 
-    res.status(200).json(blogs);
+    res.status(200).json(blogs); // Send blogs to all users (logged in or not)
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch blogs", error });
   }

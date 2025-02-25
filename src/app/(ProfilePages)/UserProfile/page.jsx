@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import styles from "./userprofile.module.css"; 
-import useAuth from '@/app/hooks/useAuth';
+import styles from "./userprofile.module.css";
+import useAuth from "@/app/hooks/useAuth";
 import Navbar from "@/components/UserProfNav";
+import Card from "../../../components/ProfBlogCard"; // Import Card component
 
 const Page = () => {
   useAuth();
@@ -49,7 +50,7 @@ const Page = () => {
         }
 
         const blogsData = await blogsResponse.json();
-        setBlogs(blogsData.filter(blog => blog.userEmail === userData.email));
+        setBlogs(blogsData.filter((blog) => blog.userEmail === userData.email));
         setLoading(false);
       } catch (err) {
         setError("Failed to load profile and blogs.");
@@ -75,7 +76,7 @@ const Page = () => {
         throw new Error("Failed to delete the blog.");
       }
 
-      setBlogs(blogs.filter(blog => blog._id !== blogId)); // Remove deleted blog from the list
+      setBlogs(blogs.filter((blog) => blog._id !== blogId)); // Remove deleted blog from the list
     } catch (err) {
       setError("Error deleting blog");
     }
@@ -84,7 +85,6 @@ const Page = () => {
   const handleEdit = (blogId) => {
     router.push(`/edit-blog?id=${blogId}`); // Pass blogId in query
   };
-  
 
   return (
     <div className={styles.container}>
@@ -97,10 +97,12 @@ const Page = () => {
           <p className={styles.errorText}>{error}</p>
         ) : user ? (
           <div className={styles.profileBox}>
-            <img 
-              src={`http://localhost:5000/uploads/${user.userImage || "default-profile.png"}`} 
-              alt="User Avatar" 
-              className={styles.profileImage} 
+            <img
+              src={`http://localhost:5000/uploads/${
+                user.userImage || "default-profile.png"
+              }`}
+              alt="User Avatar"
+              className={styles.profileImage}
             />
             <div className={styles.profileDetails}>
               <h2 className={styles.userName}>{user.name}</h2>
@@ -117,21 +119,15 @@ const Page = () => {
         <h2 className={styles.blogsHeader}>Your Blogs</h2>
         {blogs.length > 0 ? (
           blogs.map((blog) => (
-            <div key={blog._id} className={styles.blogCard}>
-              <h3 className={styles.blogTitle}>{blog.title}</h3>
-              <p className={styles.blogContent}>{blog.content}</p>
-              <div className={styles.blogImages}>
-                {blog.images.map((image, index) => (
-                  <img key={index} src={`http://localhost:5000/${image}`} alt={`Blog Image ${index}`} className={styles.blogImage} />
-                ))}
-              </div>
-              
-              {/* Edit & Delete Buttons */}
-              <div className={styles.blogActions}>
-                <button className={styles.editBtn} onClick={() => handleEdit(blog._id)}>Edit</button>
-                <button className={styles.deleteBtn} onClick={() => handleDelete(blog._id)}>Delete</button>
-              </div>
-            </div>
+            <Card
+              key={blog._id}
+              title={blog.title}
+              description={blog.content}
+              date={new Date(blog.createdAt).toLocaleDateString()}
+              stats={{ views: blog.views || 0, comments: blog.comments || 0 }}
+              onEdit={() => handleEdit(blog._id)} // Pass handleEdit to Card
+              onDelete={() => handleDelete(blog._id)} // Pass handleDelete to Card
+            />
           ))
         ) : (
           <p className={styles.noBlogsText}>No blogs found.</p>
